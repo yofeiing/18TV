@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    tools:context="com.example.fuyifang.androidtv.ui.InfoActivity">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:layout_margin="10dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/ic_recommand"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_today_recommand"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/ic_recommand"
+                    android:layout_centerVertical="true"
+                    android:text="@string/today_recommand"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </RelativeLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/today_recommon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <RelativeLayout
+                android:layout_margin="10dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/ic_live"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_live"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@id/ic_live"
+                    android:layout_centerVertical="true"
+                    android:text="@string/live"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </RelativeLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/live_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <RelativeLayout
+                android:layout_margin="10dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/ic_movie"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_movie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@id/ic_movie"
+                    android:layout_centerVertical="true"
+                    android:text="@string/movie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </RelativeLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/movies_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <RelativeLayout
+                android:layout_margin="10dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/ic_set_up"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_movie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@id/ic_set_up"
+                    android:layout_centerVertical="true"
+                    android:text="@string/movie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </RelativeLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/setup_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+
+
+    </ScrollView>
+
+</RelativeLayout>

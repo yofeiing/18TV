@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">AndroidTv</string>
+    <string name="today_recommand">今日推荐</string>
+    <string name="live">直播</string>
+    <string name="movie">电影</string>
+
+</resources>
