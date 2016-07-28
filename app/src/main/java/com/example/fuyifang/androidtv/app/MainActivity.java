@@ -1,4 +1,4 @@
-package com.example.fuyifang.androidtv;
+package com.example.fuyifang.androidtv.app;
 
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -11,6 +11,8 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.fuyifang.androidtv.R;
 
 import tcking.github.com.giraffeplayer.GiraffePlayer;
 

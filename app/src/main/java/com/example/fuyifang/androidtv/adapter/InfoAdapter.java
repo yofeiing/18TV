@@ -19,7 +19,5 @@ public class InfoAdapter extends BaseQuickAdapter<TodayRecommende> {
     protected void convert(BaseViewHolder baseViewHolder, TodayRecommende todayRecommende) {
         baseViewHolder.setImageResource(R.id.recommon_img,todayRecommende.getRecommendImg());
         baseViewHolder.setText(R.id.recommon_name,todayRecommende.getRecommendName());
-
-
     }
 }

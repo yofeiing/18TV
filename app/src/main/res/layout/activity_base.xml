@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context="com.example.fuyifang.androidtv.MainActivity">
+    tools:context=".app.MainActivity">
 
     <include
         layout="@layout/giraffe_player"

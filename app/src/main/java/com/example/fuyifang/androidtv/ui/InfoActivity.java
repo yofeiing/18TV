@@ -6,11 +6,16 @@ import android.support.v7.widget.RecyclerView;
 
 import com.example.fuyifang.androidtv.R;
 import com.example.fuyifang.androidtv.adapter.InfoAdapter;
+import com.example.fuyifang.androidtv.app.AppConfig;
 import com.example.fuyifang.androidtv.bean.TodayRecommende;
+import com.example.fuyifang.androidtv.common.ApiStringCallback;
 import com.example.fuyifang.androidtv.common.BaseActivity;
+import com.example.fuyifang.androidtv.utils.HttpUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class InfoActivity extends BaseActivity {
     private RecyclerView reTodayRecommond;
@@ -37,8 +42,6 @@ public class InfoActivity extends BaseActivity {
         manager_live.setOrientation(LinearLayoutManager.HORIZONTAL);
         re_Live.setLayoutManager(manager_live);
         re_Live.setAdapter(mAdapter);
-
-
     }
 
     private void initview() {
@@ -56,5 +59,24 @@ public class InfoActivity extends BaseActivity {
             raTodayRecommende.setRecommendName("绝命逃亡");
             mDatas.add(raTodayRecommende);
         }
+
+        HttpUtils.get(AppConfig.TV_URL, null, null, new ApiStringCallback(InfoActivity.this) {
+            @Override
+            public void onSuccessEvent(String response) {
+                showToast(response);
+            }
+        });
+
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                HttpUtils.get("hgttp://www.google.com", null, null, new ApiStringCallback(InfoActivity.this) {
+                    @Override
+                    public void onSuccessEvent(String response) {
+                        showToast(response);
+                    }
+                });
+            }
+        },5000);
     }
 }
