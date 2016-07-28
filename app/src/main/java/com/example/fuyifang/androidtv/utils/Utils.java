@@ -16,6 +16,5 @@ public class Utils {
             toast.setText(content);
         }
         toast.show();
-
     }
 }
