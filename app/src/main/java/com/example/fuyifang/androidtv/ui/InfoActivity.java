@@ -23,6 +23,7 @@ public class InfoActivity extends BaseActivity {
     private RecyclerView re_Movie;
     private List<TodayRecommende> mDatas;
     private InfoAdapter mAdapter;
+    private Timer mTimer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,16 +68,31 @@ public class InfoActivity extends BaseActivity {
             }
         });
 
-        new Timer().schedule(new TimerTask() {
+        mTimer = new Timer();
+
+        mTimer.schedule(new TimerTask() {
             @Override
             public void run() {
-                HttpUtils.get("hgttp://www.google.com", null, null, new ApiStringCallback(InfoActivity.this) {
+                InfoActivity.this.runOnUiThread(new Runnable() {
                     @Override
-                    public void onSuccessEvent(String response) {
-                        showToast(response);
+                    public void run() {
+                        HttpUtils.get("http://www.google.com", null, null, new ApiStringCallback(InfoActivity.this) {
+                            @Override
+                            public void onSuccessEvent(String response) {
+                                showToast(response);
+                            }
+                        });
                     }
                 });
             }
         },5000);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        showToast("--");
+        HttpUtils.cancel();
+        mTimer.cancel();
     }
 }

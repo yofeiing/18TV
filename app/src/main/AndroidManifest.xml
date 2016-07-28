@@ -8,16 +8,11 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.NoActionBar">
+                android:theme="@style/BaseTheme">
         <activity
-            android:name=".ui.InfoActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="sensor" />
+            android:name=".ui.InfoActivity"  android:screenOrientation="landscape" />
         <activity android:name=".app.MainActivity" />
-        <activity
-            android:name=".common.BaseActivity"
-            android:theme="@style/BaseTheme" />
-        <activity android:name=".ui.GuideActivity">
+        <activity android:name=".ui.GuideActivity" android:screenOrientation="landscape" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

@@ -10,6 +10,7 @@ import android.view.WindowManager;
 
 import com.example.fuyifang.androidtv.R;
 import com.example.fuyifang.androidtv.app.AppContext;
+import com.example.fuyifang.androidtv.utils.HttpUtils;
 import com.example.fuyifang.androidtv.utils.Utils;
 
 /**
@@ -23,12 +24,17 @@ public class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mContext = this;
         mAppContext = AppContext.getAppContext();
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);//设置全屏
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//                WindowManager.LayoutParams.FLAG_FULLSCREEN);//设置全屏
+//        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
     }
     public void showToast(String text){
         Utils.showToast(mContext,text);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

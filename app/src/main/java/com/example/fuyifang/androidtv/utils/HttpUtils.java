@@ -27,6 +27,7 @@ import java.util.Map;
  */
 public class HttpUtils {
 
+    private final static String tag = "TAG";
     /**
      * Get请求
      *
@@ -57,6 +58,7 @@ public class HttpUtils {
                 .url(url)
                 .headers(headers)
                 .params(params)
+                .tag(tag)
                 .build().execute(callback);
     }
 
@@ -112,6 +114,7 @@ public class HttpUtils {
                 .headers(headers)
                 .mediaType(mediaType)
                 .content(json)
+                .tag(tag)
                 .build()
                 .execute(callback);
     }
@@ -211,5 +214,8 @@ public class HttpUtils {
                 .execute(callback);
     }
 
+    public static void cancel(){
+        OkHttpUtils.getInstance().cancelTag(tag);
+    }
 
 }

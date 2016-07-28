@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.fuyifang.androidtv.R;
+import com.example.fuyifang.androidtv.app.MainActivity;
 import com.example.fuyifang.androidtv.common.BaseActivity;
 
 import java.util.Timer;
