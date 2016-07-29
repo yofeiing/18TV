@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
-        mPlayer = new GiraffePlayer(this);
+        mPlayer = new GiraffePlayer(this,true);
 //        btn_play = (Button) findViewById(R.id.play);
 //        edt_url = (EditText) findViewById(R.id.url);
 //        btn_play.setOnClickListener(new View.OnClickListener() {
