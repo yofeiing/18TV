@@ -27,7 +27,7 @@ public class GiraffePlayerActivity extends Activity {
         if (config == null || TextUtils.isEmpty(config.url)) {
             Toast.makeText(this, R.string.giraffe_player_url_empty, Toast.LENGTH_SHORT).show();
         } else {
-            player = new GiraffePlayer(this);
+            player = new GiraffePlayer(this,true);
             player.setTitle(config.title);
             player.setDefaultRetryTime(config.defaultRetryTime);
             player.setFullScreenOnly(config.fullScreenOnly);

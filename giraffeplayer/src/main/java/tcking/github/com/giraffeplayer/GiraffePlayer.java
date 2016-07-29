@@ -282,7 +282,7 @@ public class GiraffePlayer {
         }
     };
 
-    public GiraffePlayer(final Activity activity) {
+    public GiraffePlayer(final Activity activity,boolean isOk) {
         try {
             IjkMediaPlayer.loadLibrariesOnce(null);
             IjkMediaPlayer.native_profileBegin("libijkplayer.so");
@@ -332,67 +332,74 @@ public class GiraffePlayer {
             }
         });
 
-        seekBar = (SeekBar) activity.findViewById(R.id.app_video_seekBar);
-        seekBar.setMax(1000);
-        seekBar.setOnSeekBarChangeListener(mSeekListener);
-        $.id(R.id.app_video_play).clicked(onClickListener);
-        $.id(R.id.app_video_fullscreen).clicked(onClickListener);
-        $.id(R.id.app_video_finish).clicked(onClickListener);
-        $.id(R.id.app_video_replay_icon).clicked(onClickListener);
 
-
-        audioManager = (AudioManager) activity.getSystemService(Context.AUDIO_SERVICE);
-        mMaxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-        final GestureDetector gestureDetector = new GestureDetector(activity, new PlayerGestureListener());
-
-
-
-        View liveBox = activity.findViewById(R.id.app_video_box);
-        liveBox.setClickable(true);
-        liveBox.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (gestureDetector.onTouchEvent(motionEvent))
-                    return true;
-
-                // 处理手势结束
-                switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
-                    case MotionEvent.ACTION_UP:
-                        endGesture();
-                        break;
-                }
-
-                return false;
-            }
-        });
-
-
-        orientationEventListener = new OrientationEventListener(activity) {
-            @Override
-            public void onOrientationChanged(int orientation) {
-                if (orientation >= 0 && orientation <= 30 || orientation >= 330 || (orientation >= 150 && orientation <= 210)) {
-                    //竖屏
-                    if (portrait) {
-                        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-                        orientationEventListener.disable();
-                    }
-                } else if ((orientation >= 90 && orientation <= 120) || (orientation >= 240 && orientation <= 300)) {
-                    if (!portrait) {
-                        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-                        orientationEventListener.disable();
-                    }
-                }
-            }
-        };
-        if (fullScreenOnly) {
-            activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            seekBar = (SeekBar) activity.findViewById(R.id.app_video_seekBar);
+        if(isOk) {
+            seekBar.setMax(1000);
+            seekBar.setOnSeekBarChangeListener(mSeekListener);
         }
-        portrait=getScreenOrientation()==ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
-        initHeight=activity.findViewById(R.id.app_video_box).getLayoutParams().height;
+            $.id(R.id.app_video_play).clicked(onClickListener);
+            $.id(R.id.app_video_fullscreen).clicked(onClickListener);
+            $.id(R.id.app_video_finish).clicked(onClickListener);
+            $.id(R.id.app_video_replay_icon).clicked(onClickListener);
+
+            audioManager = (AudioManager) activity.getSystemService(Context.AUDIO_SERVICE);
+            mMaxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+
+            final GestureDetector gestureDetector = new GestureDetector(activity, new PlayerGestureListener());
+
+
+            View liveBox = activity.findViewById(R.id.app_video_box);
+        if(isOk) {
+            liveBox.setClickable(true);
+            liveBox.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    if (gestureDetector.onTouchEvent(motionEvent))
+                        return true;
+
+                    // 处理手势结束
+                    switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
+                        case MotionEvent.ACTION_UP:
+                            endGesture();
+                            break;
+                    }
+
+                    return false;
+                }
+            });
+
+
+            orientationEventListener = new OrientationEventListener(activity) {
+                @Override
+                public void onOrientationChanged(int orientation) {
+                    if (orientation >= 0 && orientation <= 30 || orientation >= 330 || (orientation >= 150 && orientation <= 210)) {
+                        //竖屏
+                        if (portrait) {
+                            activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+                            orientationEventListener.disable();
+                        }
+                    } else if ((orientation >= 90 && orientation <= 120) || (orientation >= 240 && orientation <= 300)) {
+                        if (!portrait) {
+                            activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+                            orientationEventListener.disable();
+                        }
+                    }
+                }
+            };
+            if (fullScreenOnly) {
+                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            }
+            portrait = getScreenOrientation() == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+            initHeight = activity.findViewById(R.id.app_video_box).getLayoutParams().height;
+        }else {
+            initHeight = 0;
+        }
         hideAll();
-        if (!playerSupport) {
-            showStatus(activity.getResources().getString(R.string.not_support));
-        }
+            if (!playerSupport) {
+                showStatus(activity.getResources().getString(R.string.not_support));
+            }
+
     }
 
     /**
