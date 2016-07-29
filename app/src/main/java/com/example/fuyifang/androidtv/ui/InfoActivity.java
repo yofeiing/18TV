@@ -1,6 +1,7 @@
 package com.example.fuyifang.androidtv.ui;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -23,7 +24,7 @@ public class InfoActivity extends BaseActivity {
     private RecyclerView re_Movie;
     private List<TodayRecommende> mDatas;
     private InfoAdapter mAdapter;
-    private Timer mTimer;
+//    private Timer mTimer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,15 +69,31 @@ public class InfoActivity extends BaseActivity {
             }
         });
 
-        mTimer = new Timer();
+//        mTimer = new Timer();
 
-        mTimer.schedule(new TimerTask() {
+//        mTimer.schedule(new TimerTask() {
+//            @Override
+//            public void run() {
+//                InfoActivity.this.runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        HttpUtils.get("http://www.google.com", null, null, new ApiStringCallback(InfoActivity.this) {
+//                            @Override
+//                            public void onSuccessEvent(String response) {
+//                                showToast(response);
+//                            }
+//                        });
+//                    }
+//                });
+//            }
+//        },5000);
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 InfoActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        HttpUtils.get("http://www.google.com", null, null, new ApiStringCallback(InfoActivity.this) {
+                        HttpUtils.get("http://www.baidu.com", null, null, new ApiStringCallback(InfoActivity.this) {
                             @Override
                             public void onSuccessEvent(String response) {
                                 showToast(response);
@@ -85,7 +102,7 @@ public class InfoActivity extends BaseActivity {
                     }
                 });
             }
-        },5000);
+        }, 5000);
     }
 
     @Override
@@ -93,6 +110,6 @@ public class InfoActivity extends BaseActivity {
         super.onPause();
         showToast("--");
         HttpUtils.cancel();
-        mTimer.cancel();
+//        mTimer.cancel();
     }
 }
