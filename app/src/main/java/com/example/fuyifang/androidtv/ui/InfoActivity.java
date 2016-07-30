@@ -6,9 +6,12 @@ import android.support.v7.widget.RecyclerView;
 
 import com.example.fuyifang.androidtv.R;
 import com.example.fuyifang.androidtv.adapter.InfoAdapter;
+import com.example.fuyifang.androidtv.app.AppConfig;
 import com.example.fuyifang.androidtv.bean.TodayRecommende;
+import com.example.fuyifang.androidtv.common.ApiStringCallback;
 import com.example.fuyifang.androidtv.common.BaseActivity;
 import com.example.fuyifang.androidtv.utils.HttpUtils;
+import com.example.fuyifang.androidtv.utils.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,12 +60,14 @@ public class InfoActivity extends BaseActivity {
             mDatas.add(raTodayRecommende);
         }
 
-//        HttpUtils.get(AppConfig.TV_URL, null, null, new ApiStringCallback(InfoActivity.this) {
-//            @Override
-//            public void onSuccessEvent(String response) {
-//                showToast(response);
-//            }
-//        });
+        HttpUtils.get(AppConfig.TV_URL, null, null, new ApiStringCallback(InfoActivity.this) {
+            @Override
+            public void onSuccessEvent(String response) {
+                showToast(response);
+                LogUtil.i(response+"返回");
+
+            }
+        });
 
 
     }
