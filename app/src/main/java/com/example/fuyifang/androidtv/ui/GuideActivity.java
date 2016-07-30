@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.ViewPropertyAnimation;
 import com.example.fuyifang.androidtv.R;
 import com.example.fuyifang.androidtv.app.AppConfig;
 import com.example.fuyifang.androidtv.app.MainActivity;
@@ -36,7 +37,6 @@ public class GuideActivity extends BaseActivity {
         setContentView(R.layout.activity_guide);
         mImage = (ImageView) findViewById(R.id.guide_bg);
         mLayout = (LinearLayout) findViewById(R.id.guide_player);
-        mLayout.setVisibility(View.INVISIBLE);
         mPlayer = new GiraffePlayer(this,false);
 
 
@@ -45,22 +45,31 @@ public class GuideActivity extends BaseActivity {
             public void onSuccessEvent(String response) {
                 isOk = false;
                 try {
-                    JSONObject obj = new JSONObject(response);
+                    final JSONObject obj = new JSONObject(response);
                     Integer type =  obj.getInt("adType");
                     if (type == 1){
                         mLayout.setVisibility(View.VISIBLE);
                         mPlayer.play(obj.getString("url"));
                     }else if(type == 2){
-                        Glide.with(GuideActivity.this).load(AppConfig.HOST+obj.get("url")).placeholder(R.drawable.bg).into(mImage);
+                        Glide.with(GuideActivity.this).load(AppConfig.HOST+obj.get("url")).placeholder(R.drawable.bg).animate(new ViewPropertyAnimation.Animator() {
+                            @Override
+                            public void animate(View view) {
+                                try {
+                                    new Timer().schedule(new TimerTask() {
+                                        @Override
+                                        public void run() {
+                                            Intent intent = new Intent(mContext, InfoActivity.class);
+                                            mContext.startActivity(intent);
+                                            finish();
+                                        }
+                                    },obj.getInt("showTime"));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }).into(mImage);
                     }
-                    new Timer().schedule(new TimerTask() {
-                        @Override
-                        public void run() {
-                                Intent intent = new Intent(mContext, InfoActivity.class);
-                                mContext.startActivity(intent);
-                                finish();
-                        }
-                    },obj.getInt("showTime"));
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
