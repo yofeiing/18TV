@@ -1,7 +1,9 @@
 package com.example.fuyifang.androidtv.ui;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -10,7 +12,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.ViewPropertyAnimation;
 import com.example.fuyifang.androidtv.R;
 import com.example.fuyifang.androidtv.app.AppConfig;
-import com.example.fuyifang.androidtv.app.MainActivity;
 import com.example.fuyifang.androidtv.common.ApiStringCallback;
 import com.example.fuyifang.androidtv.common.BaseActivity;
 import com.example.fuyifang.androidtv.utils.HttpUtils;
@@ -39,13 +40,13 @@ public class GuideActivity extends BaseActivity {
         mLayout = (LinearLayout) findViewById(R.id.guide_player);
         mPlayer = new GiraffePlayer(this,false);
 
-
         HttpUtils.get(AppConfig.TV_AD, null, null, new ApiStringCallback(null) {
             @Override
             public void onSuccessEvent(String response) {
                 isOk = false;
                 try {
                     final JSONObject obj = new JSONObject(response);
+                    Log.i("Tag",response);
                     Integer type =  obj.getInt("adType");
                     if (type == 1){
                         mLayout.setVisibility(View.VISIBLE);
