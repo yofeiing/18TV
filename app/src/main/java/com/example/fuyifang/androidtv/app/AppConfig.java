@@ -11,4 +11,9 @@ public class AppConfig {
 
     public final static String TV_URL = HOST + "18tv/?/?/?";
     public final static String TV_AD = HOST + "18tv/ad";
+
+
+    public final static String TV_INFO = HOST + "18tv";
+
+
 }

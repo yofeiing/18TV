@@ -1,5 +1,6 @@
-package com.example.fuyifang.androidtv.app;
+package com.example.fuyifang.androidtv.ui;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.fuyifang.androidtv.R;
+import com.example.fuyifang.androidtv.utils.LogUtil;
 
 import tcking.github.com.giraffeplayer.GiraffePlayer;
 
@@ -28,21 +30,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
         mPlayer = new GiraffePlayer(this,true);
-//        btn_play = (Button) findViewById(R.id.play);
-//        edt_url = (EditText) findViewById(R.id.url);
-//        btn_play.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (TextUtils.isEmpty(edt_url.getText().toString()))
-//                {
-//                    Toast.makeText(MainActivity.this, "url不能为空", Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
-//                mPlayer.play(edt_url.getText().toString().trim());
-//            }
-//        });
-        mPlayer.play(url1);
-        mPlayer.setTitle(url1);
+        Intent intent = getIntent();
+        String url = intent.getStringExtra("url");
+        String title = intent.getStringExtra("title");
+        String[] split = url.split(",");
+        LogUtil.i(split[0]);
+
+        mPlayer.play(split[0]);
+        mPlayer.setTitle(title);
     }
 
     @Override
