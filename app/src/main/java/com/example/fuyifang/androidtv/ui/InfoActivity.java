@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.fuyifang.androidtv.R;
@@ -31,6 +32,7 @@ public class InfoActivity extends BaseActivity {
     private List<InfoBean.MovieBean> data_movie;
     private List<InfoBean.TvLiveBean> data_tvlivebean;
     private SetupAdapter setupAdapter;
+    private RelativeLayout re_person;
     InfoAdapter recommendAdapter;
 
     @Override
@@ -78,6 +80,14 @@ public class InfoActivity extends BaseActivity {
         re_Live = (RecyclerView) findViewById(R.id.live_content);
         re_Movie = (RecyclerView) findViewById(R.id.movies_content);
         re_setup = (RecyclerView) findViewById(R.id.setup_content);
+        re_person = (RelativeLayout) findViewById(R.id.re_person);
+        re_person.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(mContext,LoginActivity.class));
+
+            }
+        });
 
     }
 
