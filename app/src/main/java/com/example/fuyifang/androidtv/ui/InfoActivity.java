@@ -22,57 +22,25 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InfoActivity extends BaseActivity {
+public class InfoActivity extends BaseActivity{
+
     private RecyclerView reTodayRecommond;
     private RecyclerView re_Live;
     private RecyclerView re_Movie;
     private RecyclerView re_setup;
-    private List<InfoBean> mDatas;
     private List<InfoBean.RecommendBean> data_recommendBean;
     private List<InfoBean.MovieBean> data_movie;
     private List<InfoBean.TvLiveBean> data_tvlivebean;
-    private SetupAdapter setupAdapter;
     private RelativeLayout re_person;
-    InfoAdapter recommendAdapter;
-
+    private InfoAdapter recommendAdapter;
+    private InfoAdapter reMovieAdapter;
+    private InfoAdapter reLiveAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
-        initview();
         initdata();
-
-        LinearLayoutManager manager = new LinearLayoutManager(mContext);
-        manager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        reTodayRecommond.setLayoutManager(manager);
-
-        setupAdapter = new SetupAdapter(mContext);
-        LinearLayoutManager manager_movie = new LinearLayoutManager(mContext);
-        manager_movie.setOrientation(LinearLayoutManager.HORIZONTAL);
-        re_Movie.setLayoutManager(manager_movie);
-//        re_Movie.setAdapter(mAdapter);
-        LinearLayoutManager manager_live = new LinearLayoutManager(mContext);
-        manager_live.setOrientation(LinearLayoutManager.HORIZONTAL);
-        re_Live.setLayoutManager(manager_live);
-//        re_Live.setAdapter(mAdapter);
-        LinearLayoutManager manager_setup = new LinearLayoutManager(mContext);
-        manager_setup.setOrientation(LinearLayoutManager.HORIZONTAL);
-        re_setup.setLayoutManager(manager_setup);
-        re_setup.setAdapter(setupAdapter);
-    }
-
-    private void initEvent() {
-       recommendAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
-           @Override
-           public void onItemClick(View view, int i) {
-               LogUtil.i(data_recommendBean.get(i).getUrl());
-               Intent intent = new Intent(mContext, MainActivity.class);
-               intent.putExtra("url",data_recommendBean.get(i).getUrl());
-               intent.putExtra("title",data_recommendBean.get(i).getName());
-               mContext.startActivity(intent);
-
-           }
-       });
+        initview();
     }
 
     private void initview() {
@@ -84,46 +52,77 @@ public class InfoActivity extends BaseActivity {
         re_person.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(mContext,LoginActivity.class));
-
+                startActivity(new Intent(mContext, LoginActivity.class));
             }
         });
 
-    }
+        // 设置  RecyclerView
+        LinearLayoutManager manager_setup = new LinearLayoutManager(mContext);
+        manager_setup.setOrientation(LinearLayoutManager.HORIZONTAL);
+        re_setup.setLayoutManager(manager_setup);
+        SetupAdapter setupAdapter = new SetupAdapter(mContext);
+        re_setup.setAdapter(setupAdapter);
 
+    }
     private void initdata() {
-        mDatas = new ArrayList<>();
         data_tvlivebean = new ArrayList<>();
         data_movie = new ArrayList<>();
         data_recommendBean = new ArrayList<>();
         HttpUtils.get(AppConfig.TV_INFO, null, null, new ApiStringCallback(InfoActivity.this) {
             @Override
             public void onSuccessEvent(String response) {
-//                showToast(response);
-                LogUtil.i(response);
                 Gson gson = new Gson();
-               InfoBean bean = gson.fromJson(response, InfoBean.class);
-//                mDatas = bean.getRecommend();
-//                final List<InfoBean.RecommendBean> recommend = bean.getRecommend();
-//                LogUtil.i(bean.getRecommend()+"bean"+recommend);
-                LogUtil.i(mDatas+"");
-                data_recommendBean.addAll(bean.getRecommend());
-                data_movie.addAll(bean.getMovie());
-                data_tvlivebean .addAll( bean.getTvLive());
-                recommendAdapter = new InfoAdapter(R.layout.today_recommonde, data_recommendBean);
-                reTodayRecommond.setAdapter(recommendAdapter);
-                recommendAdapter.notifyDataSetChanged();
-                initEvent();
-
+                InfoBean bean = gson.fromJson(response, InfoBean.class);
+                data_recommendBean = bean.getRecommend() ;
+                data_movie = bean.getMovie();
+                data_tvlivebean= bean.getTvLive();
+                initRecyclerView();
             }
         });
 
 
     }
 
+    private void initRecyclerView(){
+        //推荐视频
+        LinearLayoutManager manager = new LinearLayoutManager(mContext);
+        manager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        reTodayRecommond.setLayoutManager(manager);
+        recommendAdapter = new InfoAdapter(R.layout.today_recommonde, data_recommendBean);
+        reTodayRecommond.setAdapter(recommendAdapter);
+        recommendAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int i) {
+                Intent intent = new Intent(mContext, MainActivity.class);
+                intent.putExtra("url", data_recommendBean.get(i).getUrl());
+                intent.putExtra("title", data_recommendBean.get(i).getName());
+                mContext.startActivity(intent);
+            }
+        });
+
+        //直播视频
+        LinearLayoutManager manager_live = new LinearLayoutManager(mContext);
+        manager_live.setOrientation(LinearLayoutManager.HORIZONTAL);
+        re_Live.setLayoutManager(manager_live);
+        reLiveAdapter = new InfoAdapter(R.layout.today_recommonde, data_recommendBean);
+        re_Live.setAdapter(reLiveAdapter);
+//        reLiveAdapter.setOnRecyclerViewItemClickListener(this);
+
+        //点播电影
+        LinearLayoutManager manager_movie = new LinearLayoutManager(mContext);
+        manager_movie.setOrientation(LinearLayoutManager.HORIZONTAL);
+        re_Movie.setLayoutManager(manager_movie);
+        reMovieAdapter = new InfoAdapter(R.layout.today_recommonde, data_recommendBean);
+        re_Movie.setAdapter(reMovieAdapter);
+//        reMovieAdapter.setOnRecyclerViewItemClickListener(this);
+
+    }
+
+
     @Override
     protected void onPause() {
         super.onPause();
         HttpUtils.cancel();
     }
+
 }

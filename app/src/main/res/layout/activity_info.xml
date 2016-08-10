@@ -3,136 +3,159 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="5dp"
     android:background="@drawable/bg"
     android:orientation="vertical"
+    android:padding="5dp"
     tools:context="com.example.fuyifang.androidtv.ui.InfoActivity">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-         <RelativeLayout
-             android:id="@+id/re_person"
-             android:layout_width="match_parent"
-             android:layout_height="50dp">
-             <ImageView
-                 android:id="@+id/person_avater"
-                 android:layout_centerVertical="true"
-                 android:src="@mipmap/ic_launcher"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content" />
-             <TextView
-                 android:layout_toRightOf="@id/person_avater"
-                 android:id="@+id/person_name"
-                 android:layout_centerVertical="true"
-                 android:text="未登录"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content" />
-         </RelativeLayout>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
             <RelativeLayout
-                android:layout_margin="10dp"
-                android:orientation="horizontal"
+                android:id="@+id/re_person"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="50dp">
+
+                <ImageView
+                    android:id="@+id/person_avater"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:src="@mipmap/ic_launcher" />
+
+                <TextView
+                    android:id="@+id/person_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/person_avater"
+                    android:text="@string/no_sign_in"
+                    android:textColor="@color/white" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
+
                 <ImageView
                     android:id="@+id/ic_recommand"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/ic_today_recommand"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_today_recommand" />
+
                 <TextView
-                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@+id/ic_recommand"
-                    android:layout_centerVertical="true"
                     android:text="@string/today_recommand"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:textColor="@color/white" />
 
             </RelativeLayout>
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/today_recommon"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
+
             <RelativeLayout
-                android:layout_margin="10dp"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
+
                 <ImageView
                     android:id="@+id/ic_live"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/ic_live"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_live" />
+
                 <TextView
-                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@id/ic_live"
-                    android:layout_centerVertical="true"
                     android:text="@string/live"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:textColor="@color/white" />
 
             </RelativeLayout>
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/live_content"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
+
             <RelativeLayout
-                android:layout_margin="10dp"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
+
                 <ImageView
                     android:id="@+id/ic_movie"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/ic_movie"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_movie" />
+
                 <TextView
-                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@id/ic_movie"
-                    android:layout_centerVertical="true"
                     android:text="@string/movie"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:textColor="@color/white" />
 
             </RelativeLayout>
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/movies_content"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
+
             <RelativeLayout
-                android:layout_margin="10dp"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
+
                 <ImageView
                     android:id="@+id/ic_setup"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/ic_setup"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_setup" />
+
                 <TextView
-                    android:text="@string/setup"
-                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@id/ic_setup"
-                    android:layout_centerVertical="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:text="@string/setup"
+                    android:textColor="@color/white" />
 
             </RelativeLayout>
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/setup_content"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
     </ScrollView>
