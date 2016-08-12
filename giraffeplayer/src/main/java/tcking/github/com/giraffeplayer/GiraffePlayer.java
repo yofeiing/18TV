@@ -99,11 +99,11 @@ public class GiraffePlayer {
                 videoView.start();
                 doPauseResume();
             } else if (v.getId() == R.id.app_video_finish) {
-                if (!fullScreenOnly && !portrait) {
-                    activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                } else {
+//                if (!fullScreenOnly && !portrait) {
+//                    activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//                } else {
                     activity.finish();
-                }
+//                }
             }
         }
     };

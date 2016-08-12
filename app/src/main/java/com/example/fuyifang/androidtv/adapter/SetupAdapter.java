@@ -20,15 +20,32 @@ public class SetupAdapter extends RecyclerView.Adapter<SetupAdapter.Setupviewhod
     public SetupAdapter(Context context){
         this.mContext = context;
     }
+    public interface OnItemClickListner{
+        void Itemclick(View view, int position);
+    }
+    private OnItemClickListner onItemClickListner;
+    public  void setOnItemClickListner(OnItemClickListner OnItemClickListner){
+        this.onItemClickListner = OnItemClickListner;
+
+    }
     @Override
     public Setupviewhoder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new Setupviewhoder(LayoutInflater.from(mContext).inflate(R.layout.setup_item,parent,false));
     }
 
     @Override
-    public void onBindViewHolder(Setupviewhoder holder, int position) {
+    public void onBindViewHolder(final Setupviewhoder holder, int position) {
         holder.setup_img.setImageResource(setup_img[position]);
         holder.setup_text.setText(setup_text[position]);
+        if (onItemClickListner !=null){
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos = holder.getLayoutPosition();
+                    onItemClickListner.Itemclick(v,pos);
+                }
+            });
+        }
 
     }
 

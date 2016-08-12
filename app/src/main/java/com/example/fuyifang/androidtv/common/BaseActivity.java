@@ -7,10 +7,13 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.example.fuyifang.androidtv.R;
 import com.example.fuyifang.androidtv.app.AppContext;
 import com.example.fuyifang.androidtv.utils.HttpUtils;
+import com.example.fuyifang.androidtv.utils.LogUtil;
 import com.example.fuyifang.androidtv.utils.Utils;
 
 /**
@@ -24,6 +27,7 @@ public class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mContext = this;
         mAppContext = AppContext.getAppContext();
+        LogUtil.isDebug = true;
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN);//设置全屏
 //        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -32,6 +36,7 @@ public class BaseActivity extends AppCompatActivity {
     public void showToast(String text){
         Utils.showToast(mContext,text);
     }
+
 
     @Override
     protected void onDestroy() {

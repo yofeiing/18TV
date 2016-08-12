@@ -1,10 +1,19 @@
 package com.example.fuyifang.androidtv.ui;
 
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -12,17 +21,34 @@ import com.example.fuyifang.androidtv.R;
 import com.example.fuyifang.androidtv.adapter.InfoAdapter;
 import com.example.fuyifang.androidtv.adapter.SetupAdapter;
 import com.example.fuyifang.androidtv.app.AppConfig;
+import com.example.fuyifang.androidtv.app.AppContext;
 import com.example.fuyifang.androidtv.bean.InfoBean;
 import com.example.fuyifang.androidtv.common.ApiStringCallback;
 import com.example.fuyifang.androidtv.common.BaseActivity;
 import com.example.fuyifang.androidtv.utils.HttpUtils;
 import com.example.fuyifang.androidtv.utils.LogUtil;
+import com.example.fuyifang.androidtv.utils.Utils;
 import com.google.gson.Gson;
+import com.squareup.okhttp.Request;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.FileCallBack;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InfoActivity extends BaseActivity{
+import static android.os.Environment.*;
+
+public class InfoActivity extends BaseActivity {
 
     private RecyclerView reTodayRecommond;
     private RecyclerView re_Live;
@@ -35,6 +61,11 @@ public class InfoActivity extends BaseActivity{
     private InfoAdapter recommendAdapter;
     private InfoAdapter reMovieAdapter;
     private InfoAdapter reLiveAdapter;
+    private static String downloadUrl;
+
+    /* 更新进度条 */
+    private ProgressBar mProgress;
+    private Dialog mDownloadDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +93,28 @@ public class InfoActivity extends BaseActivity{
         re_setup.setLayoutManager(manager_setup);
         SetupAdapter setupAdapter = new SetupAdapter(mContext);
         re_setup.setAdapter(setupAdapter);
+       setupAdapter.setOnItemClickListner(new SetupAdapter.OnItemClickListner() {
+           @Override
+           public void Itemclick(View view, int position) {
+               switch (position){
+                   //软件更新
+                   case 0:
+                       showToast("已是最新版本");
+                       break;
+                   //问题反馈
+                   case 1:
+                       break;
+                   //播放设置
+                   case 2:
+                       break;
+                   //关于
+                   case 3:
+                       break;
+
+               }
+           }
+       });
+
 
     }
     private void initdata() {
@@ -71,18 +124,42 @@ public class InfoActivity extends BaseActivity{
         HttpUtils.get(AppConfig.TV_INFO, null, null, new ApiStringCallback(InfoActivity.this) {
             @Override
             public void onSuccessEvent(String response) {
+                LogUtil.i(response);
                 Gson gson = new Gson();
                 InfoBean bean = gson.fromJson(response, InfoBean.class);
                 data_recommendBean = bean.getRecommend() ;
                 data_movie = bean.getMovie();
                 data_tvlivebean= bean.getTvLive();
                 initRecyclerView();
+                updateApp(); //进行检查更新
             }
         });
 
 
     }
+    /**
+     * APP 检查更新
+     */
+    private void updateApp(){
+        HttpUtils.get(AppConfig.TV_UPDATE, null, null, new ApiStringCallback(null) {
+            @Override
+            public void onSuccessEvent(String response) {
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    String versionName = Utils.getVersionCode(AppContext.getAppContext());
+                    String updateName = obj.getString("version");
+                    downloadUrl = obj.getString("url");
+                    String detail = obj.getString("details");
+                    if(!versionName.equals(updateName)){
+                        showNoticeDialog(detail);
+                    }
 
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
     private void initRecyclerView(){
         //推荐视频
         LinearLayoutManager manager = new LinearLayoutManager(mContext);
@@ -104,25 +181,143 @@ public class InfoActivity extends BaseActivity{
         LinearLayoutManager manager_live = new LinearLayoutManager(mContext);
         manager_live.setOrientation(LinearLayoutManager.HORIZONTAL);
         re_Live.setLayoutManager(manager_live);
-        reLiveAdapter = new InfoAdapter(R.layout.today_recommonde, data_recommendBean);
+        reLiveAdapter = new InfoAdapter(R.layout.today_recommonde, data_tvlivebean);
         re_Live.setAdapter(reLiveAdapter);
-//        reLiveAdapter.setOnRecyclerViewItemClickListener(this);
+        reLiveAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int i) {
+                startActivity(new Intent(mContext,LiveDetailActivity.class));
+            }
+        });
 
         //点播电影
         LinearLayoutManager manager_movie = new LinearLayoutManager(mContext);
         manager_movie.setOrientation(LinearLayoutManager.HORIZONTAL);
         re_Movie.setLayoutManager(manager_movie);
-        reMovieAdapter = new InfoAdapter(R.layout.today_recommonde, data_recommendBean);
+        reMovieAdapter = new InfoAdapter(R.layout.today_recommonde, data_movie);
         re_Movie.setAdapter(reMovieAdapter);
-//        reMovieAdapter.setOnRecyclerViewItemClickListener(this);
+
+    }
+
+
+
+
+
+
+
+    /**
+     * 显示软件更新对话框
+     */
+    private void showNoticeDialog(String msg)
+    {
+        // 构造对话框
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext,R.style.update_alert);
+        builder.setTitle(R.string.soft_update_title);
+        builder.setMessage(msg);
+        // 更新
+        builder.setPositiveButton(R.string.soft_update_updatebtn, new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                dialog.dismiss();
+                // 显示下载对话框
+                showDownloadDialog();
+            }
+
+        });
+        // 稍后更新
+        builder.setNegativeButton(R.string.soft_update_later, new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                dialog.dismiss();
+            }
+        });
+        Dialog noticeDialog = builder.create();
+        noticeDialog.show();
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+    }
+
+    /**
+     * 显示软件下载对话框
+     */
+    private void showDownloadDialog() {
+        // 构造软件下载对话框
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext,R.style.update_alert);
+        builder.setTitle(R.string.soft_update_updatebtn + "···");
+        // 给下载对话框增加进度条
+        final LayoutInflater inflater = LayoutInflater.from(mContext);
+        View v = inflater.inflate(R.layout.softupdate_progress, null);
+        mProgress = (ProgressBar) v.findViewById(R.id.update_progress);
+        builder.setView(v);
+        builder.setCancelable(false);
+        mDownloadDialog = builder.create();
+        mDownloadDialog.show();
+        // 文件
+        downloadApk();
+    }
+
+
+
+
+    /**
+     * 安装APK文件
+     *
+     */
+    private void installApk() {
+//        File apkfile = new File(mSavePath, mHashMap.get("name"));
+//        if (!apkfile.exists()) {
+//            return;
+//        }
+//        // 通过Intent安装APK文件
+//        Intent i = new Intent(Intent.ACTION_VIEW);
+//        i.setDataAndType(Uri.parse("file://" + apkfile.toString()),
+//                "application/vnd.android.package-archive");
+//        mContext.startActivity(i);
+    }
+    /**
+     * 下载apk文件
+     */
+    public  void downloadApk() {
+        LogUtil.i(downloadUrl);
+        // 启动新线程下载软件
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                OkHttpUtils.get().url(downloadUrl)
+                        .build().execute(new FileCallBack(Environment.getExternalStorageDirectory().getAbsolutePath(),"18tv.apk") {
+                    @Override
+                    public void inProgress(float progress) {
+                        mProgress.setProgress((int) (progress*100));
+                        LogUtil.i( (progress*100)+"进度");
+                    }
+
+                    @Override
+                    public void onError(Request request, Exception e) {
+                        LogUtil.i(e.toString());
+
+                    }
+
+                    @Override
+                    public void onResponse(File response) {
+                        LogUtil.i(response.getAbsolutePath()+"文件地址");
+                    }
+                });
+            }
+        }).start();
 
     }
 
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onDestroy() {
+        super.onDestroy();
         HttpUtils.cancel();
     }
-
 }

@@ -3,6 +3,7 @@ package com.example.fuyifang.androidtv.ui;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -52,23 +53,15 @@ public class GuideActivity extends BaseActivity {
                         mLayout.setVisibility(View.VISIBLE);
                         mPlayer.play(obj.getString("url"));
                     }else if(type == 2){
-                        Glide.with(GuideActivity.this).load(AppConfig.HOST+obj.get("url")).placeholder(R.drawable.bg).animate(new ViewPropertyAnimation.Animator() {
+                        Glide.with(GuideActivity.this).load(obj.get("url")).placeholder(R.drawable.bg).into(mImage);
+                        new Handler().postDelayed(new Runnable() {
                             @Override
-                            public void animate(View view) {
-                                try {
-                                    new Timer().schedule(new TimerTask() {
-                                        @Override
-                                        public void run() {
-                                            Intent intent = new Intent(mContext, InfoActivity.class);
-                                            mContext.startActivity(intent);
-                                            finish();
-                                        }
-                                    },obj.getInt("showTime"));
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
+                            public void run() {
+                                Intent intent = new Intent(mContext, InfoActivity.class);
+                                mContext.startActivity(intent);
+                                finish();
                             }
-                        }).into(mImage);
+                        },obj.getInt("showTime"));
                     }
 
                 } catch (JSONException e) {
@@ -81,9 +74,7 @@ public class GuideActivity extends BaseActivity {
             @Override
             public void run() {
                 if(isOk) {
-                    Intent intent = new Intent(mContext, InfoActivity.class);
-                    mContext.startActivity(intent);
-                    finish();
+
                 }
             }
         },5000);
