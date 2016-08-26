@@ -15,9 +15,7 @@ public class AppConfig {
     public final static String TV_LOGIN_RE= HOST + "user/login/?/?";
     public final static String TV_REGIST = HOST + "user/register/";
     public final static String TV_REGIST_RE = HOST + "user/register";
-    public final static String TV_UPDATE = HOST + "18tv/updateApp";
-
-
+    public final static String TV_UPDATE = HOST + "18tv/updataApp";
     public final static String TV_INFO = HOST + "18tv";
 
 

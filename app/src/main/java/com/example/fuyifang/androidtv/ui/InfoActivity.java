@@ -194,6 +194,7 @@ public class InfoActivity extends BaseActivity {
                 @Override
                 public void onSuccessEvent(String response) {
                     try {
+                        LogUtil.d("tag"+response);
                         JSONObject obj = new JSONObject(response);
                         String versionName = Utils.getVersionCode(AppContext.getAppContext());
                         updateName = obj.getString("version");
