@@ -1,5 +1,6 @@
 package com.example.fuyifang.androidtv.ui;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -46,6 +47,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
+
 import static android.os.Environment.*;
 
 public class InfoActivity extends BaseActivity {
@@ -62,6 +66,8 @@ public class InfoActivity extends BaseActivity {
     private InfoAdapter reMovieAdapter;
     private InfoAdapter reLiveAdapter;
     private static String downloadUrl;
+    private static String updateName;
+    private static final int RC_READ_AND_WRITE = 123;
 
     /* 更新进度条 */
     private ProgressBar mProgress;
@@ -137,29 +143,7 @@ public class InfoActivity extends BaseActivity {
 
 
     }
-    /**
-     * APP 检查更新
-     */
-    private void updateApp(){
-        HttpUtils.get(AppConfig.TV_UPDATE, null, null, new ApiStringCallback(null) {
-            @Override
-            public void onSuccessEvent(String response) {
-                try {
-                    JSONObject obj = new JSONObject(response);
-                    String versionName = Utils.getVersionCode(AppContext.getAppContext());
-                    String updateName = obj.getString("version");
-                    downloadUrl = obj.getString("url");
-                    String detail = obj.getString("details");
-                    if(!versionName.equals(updateName)){
-                        showNoticeDialog(detail);
-                    }
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
     private void initRecyclerView(){
         //推荐视频
         LinearLayoutManager manager = new LinearLayoutManager(mContext);
@@ -199,12 +183,34 @@ public class InfoActivity extends BaseActivity {
 
     }
 
-
-
-
-
-
-
+    /**
+     * APP 检查更新
+     */
+    @AfterPermissionGranted(RC_READ_AND_WRITE)
+    private void updateApp(){
+        String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        if (EasyPermissions.hasPermissions(this,perms)) {
+            HttpUtils.get(AppConfig.TV_UPDATE, null, null, new ApiStringCallback(null) {
+                @Override
+                public void onSuccessEvent(String response) {
+                    try {
+                        JSONObject obj = new JSONObject(response);
+                        String versionName = Utils.getVersionCode(AppContext.getAppContext());
+                        updateName = obj.getString("version");
+                        downloadUrl = obj.getString("url");
+                        String detail = obj.getString("details");
+                        if(!versionName.equals(updateName)){
+                            showNoticeDialog(detail);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }else {
+            EasyPermissions.requestPermissions(this,getString(R.string.request_permissions), RC_READ_AND_WRITE, perms);
+        }
+    }
     /**
      * 显示软件更新对话框
      */
@@ -238,11 +244,6 @@ public class InfoActivity extends BaseActivity {
         Dialog noticeDialog = builder.create();
         noticeDialog.show();
     }
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-    }
 
     /**
      * 显示软件下载对话框
@@ -263,24 +264,21 @@ public class InfoActivity extends BaseActivity {
         downloadApk();
     }
 
-
-
-
     /**
      * 安装APK文件
-     *
      */
     private void installApk() {
-//        File apkfile = new File(mSavePath, mHashMap.get("name"));
-//        if (!apkfile.exists()) {
-//            return;
-//        }
-//        // 通过Intent安装APK文件
-//        Intent i = new Intent(Intent.ACTION_VIEW);
-//        i.setDataAndType(Uri.parse("file://" + apkfile.toString()),
-//                "application/vnd.android.package-archive");
-//        mContext.startActivity(i);
+        File apkfile = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"18tv/","18tv"+updateName+".apk");
+        if (!apkfile.exists()) {
+            return;
+        }
+        // 通过Intent安装APK文件
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setDataAndType(Uri.parse("file://" + apkfile.toString()),
+                "application/vnd.android.package-archive");
+        mContext.startActivity(i);
     }
+
     /**
      * 下载apk文件
      */
@@ -291,29 +289,29 @@ public class InfoActivity extends BaseActivity {
             @Override
             public void run() {
                 OkHttpUtils.get().url(downloadUrl)
-                        .build().execute(new FileCallBack(Environment.getExternalStorageDirectory().getAbsolutePath(),"18tv.apk") {
+                        .build().execute(new FileCallBack(Environment.getExternalStorageDirectory().getAbsolutePath()+"18tv/","18tv"+updateName+".apk") {
                     @Override
                     public void inProgress(float progress) {
                         mProgress.setProgress((int) (progress*100));
-                        LogUtil.i( (progress*100)+"进度");
                     }
-
                     @Override
                     public void onError(Request request, Exception e) {
                         LogUtil.i(e.toString());
-
                     }
-
                     @Override
                     public void onResponse(File response) {
                         LogUtil.i(response.getAbsolutePath()+"文件地址");
+                        installApk();
                     }
                 });
             }
         }).start();
-
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
 
     @Override
     protected void onDestroy() {

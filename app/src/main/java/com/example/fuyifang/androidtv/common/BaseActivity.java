@@ -1,6 +1,8 @@
 package com.example.fuyifang.androidtv.common;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.fuyifang.androidtv.R;
@@ -16,10 +19,14 @@ import com.example.fuyifang.androidtv.utils.HttpUtils;
 import com.example.fuyifang.androidtv.utils.LogUtil;
 import com.example.fuyifang.androidtv.utils.Utils;
 
+import java.util.List;
+
+import pub.devrel.easypermissions.EasyPermissions;
+
 /**
  * Created by fuyifang on 2016/7/24.
  */
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks{
     protected Context mContext;
     protected AppContext  mAppContext;
     @Override
@@ -42,4 +49,39 @@ public class BaseActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        // Forward results to EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> list) {
+        // Some permissions have been granted
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == EasyPermissions.SETTINGS_REQ_CODE) {
+
+        }
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+
+        EasyPermissions.checkDeniedPermissionsNeverAskAgain(
+                this,
+                getString(R.string.request_permissions_toast),
+                R.string.setting,
+                R.string.cancel,
+                null,
+                perms);
+    }
+
 }

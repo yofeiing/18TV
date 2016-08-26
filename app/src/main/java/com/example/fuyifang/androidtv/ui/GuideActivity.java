@@ -54,16 +54,15 @@ public class GuideActivity extends BaseActivity {
                         mPlayer.play(obj.getString("url"));
                     }else if(type == 2){
                         Glide.with(GuideActivity.this).load(obj.get("url")).placeholder(R.drawable.bg).into(mImage);
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                Intent intent = new Intent(mContext, InfoActivity.class);
-                                mContext.startActivity(intent);
-                                finish();
-                            }
-                        },obj.getInt("showTime"));
                     }
-
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent intent = new Intent(mContext, InfoActivity.class);
+                            mContext.startActivity(intent);
+                            finish();
+                        }
+                    },obj.getInt("showTime"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

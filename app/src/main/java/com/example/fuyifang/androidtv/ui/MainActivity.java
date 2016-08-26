@@ -34,8 +34,7 @@ public class MainActivity extends AppCompatActivity {
         String url = intent.getStringExtra("url");
         String title = intent.getStringExtra("title");
         String[] split = url.split(",");
-        LogUtil.i(split[0]);
-
+        //TODO  做播放地址更换
         mPlayer.play(split[0]);
         mPlayer.setTitle(title);
     }

@@ -41,9 +41,7 @@ public class InfoAdapter extends BaseQuickAdapter {
                 baseViewHolder.setImageResource(R.id.recommon_img,R.mipmap.ic_launcher);
             }else {
                 Glide.with(mContext).load(imgUri).into((ImageView) baseViewHolder.getView(R.id.recommon_img));
-
             }
-
         }else if (object instanceof InfoBean.MovieBean){
             baseViewHolder.setText(R.id.recommon_name,((InfoBean.MovieBean)object).getClassName());
         }else if (object instanceof InfoBean.TvLiveBean){
