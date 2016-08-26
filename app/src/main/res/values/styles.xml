@@ -8,7 +8,15 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
     <style name="update_alert" parent="Theme.AppCompat.Light.Dialog.Alert"/>
+    <style name="MyTextLabel" parent="TextAppearance.AppCompat">
+        <!-- Hint color and label color in FALSE state -->
+        <item name="android:textColorHint">@color/white</item>
+        <!--The size of the text appear on label in false state -->
+        <item name="android:textSize">20sp</item>
+        <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
+        <item name="colorAccent">@color/colorAccent</item>
 
+    </style>
     <style name="BaseTheme" parent="AppTheme">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
