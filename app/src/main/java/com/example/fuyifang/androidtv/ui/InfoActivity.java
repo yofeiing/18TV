@@ -252,7 +252,7 @@ public class InfoActivity extends BaseActivity {
     private void showDownloadDialog() {
         // 构造软件下载对话框
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext,R.style.update_alert);
-        builder.setTitle(R.string.soft_update_updatebtn + "···");
+        builder.setTitle(getString(R.string.soft_update_updatebtn )+ "···");
         // 给下载对话框增加进度条
         final LayoutInflater inflater = LayoutInflater.from(mContext);
         View v = inflater.inflate(R.layout.softupdate_progress, null);
