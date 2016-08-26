@@ -170,7 +170,10 @@ public class InfoActivity extends BaseActivity {
         reLiveAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int i) {
-                startActivity(new Intent(mContext,LiveDetailActivity.class));
+                Intent intent = new Intent(mContext,LiveDetailActivity.class);
+                intent.putExtra("tv_type",AppConfig.TV_TYPE.TV_LIVE);   //类型
+                intent.putExtra("typeId",data_tvlivebean.get(i).getId()+"");
+                startActivity(intent);
             }
         });
 

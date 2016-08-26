@@ -21,6 +21,5 @@ public class LiveDetailAdapter extends BaseQuickAdapter<TodayRecommende>{
     protected void convert(BaseViewHolder baseViewHolder, TodayRecommende recommende) {
         baseViewHolder.setText(R.id.recommon_name,recommende.getRecommendName());
         baseViewHolder.setImageResource(R.id.recommon_img,recommende.getRecommendImg());
-
     }
 }
