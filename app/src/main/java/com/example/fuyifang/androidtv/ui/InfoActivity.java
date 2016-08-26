@@ -269,7 +269,7 @@ public class InfoActivity extends BaseActivity {
      * 安装APK文件
      */
     private void installApk() {
-        File apkfile = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"18tv/","18tv"+updateName+".apk");
+        File apkfile = new File(Environment.getExternalStorageDirectory().getAbsolutePath(),"18tv"+updateName+".apk");
         if (!apkfile.exists()) {
             return;
         }
@@ -290,7 +290,7 @@ public class InfoActivity extends BaseActivity {
             @Override
             public void run() {
                 OkHttpUtils.get().url(downloadUrl)
-                        .build().execute(new FileCallBack(Environment.getExternalStorageDirectory().getAbsolutePath()+"18tv/","18tv"+updateName+".apk") {
+                        .build().execute(new FileCallBack(Environment.getExternalStorageDirectory().getAbsolutePath(),"18tv"+updateName+".apk") {
                     @Override
                     public void inProgress(float progress) {
                         mProgress.setProgress((int) (progress*100));
