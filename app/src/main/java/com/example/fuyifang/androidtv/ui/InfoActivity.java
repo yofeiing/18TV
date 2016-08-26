@@ -302,6 +302,7 @@ public class InfoActivity extends BaseActivity {
                     @Override
                     public void onResponse(File response) {
                         LogUtil.i(response.getAbsolutePath()+"文件地址");
+                        mDownloadDialog.dismiss();
                         installApk();
                     }
                 });
