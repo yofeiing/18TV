@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -54,6 +56,14 @@ public class GuideActivity extends BaseActivity {
                         mPlayer.play(obj.getString("url"));
                     }else if(type == 2){
                         Glide.with(GuideActivity.this).load(obj.get("url")).placeholder(R.drawable.bg).into(mImage);
+                        ScaleAnimation scaleAnimation = new ScaleAnimation(
+                                1, 1.2f,1,1.2f,
+                                Animation.RELATIVE_TO_SELF,0.5f,
+                                Animation.RELATIVE_TO_SELF,0.5f);
+                        scaleAnimation.setFillAfter(true);
+                        scaleAnimation.setDuration(3000);
+
+                        mImage.startAnimation(scaleAnimation);
                     }
                     new Handler().postDelayed(new Runnable() {
                         @Override

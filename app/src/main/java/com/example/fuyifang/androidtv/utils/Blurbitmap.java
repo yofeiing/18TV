@@ -45,9 +45,6 @@ public class Blurbitmap {
         // 将数据填充到Allocation中
         tmpOut.copyTo(outputBitmap);
 
-
-
-
         return outputBitmap;
 
 

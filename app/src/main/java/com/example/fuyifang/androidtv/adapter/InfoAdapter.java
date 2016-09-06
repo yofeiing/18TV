@@ -1,22 +1,15 @@
 package com.example.fuyifang.androidtv.adapter;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.fuyifang.androidtv.R;
-import com.example.fuyifang.androidtv.app.AppConfig;
 import com.example.fuyifang.androidtv.app.AppContext;
 import com.example.fuyifang.androidtv.bean.InfoBean;
-import com.example.fuyifang.androidtv.bean.TodayRecommende;
-import com.example.fuyifang.androidtv.utils.LogUtil;
+import com.example.fuyifang.androidtv.utils.UrlBitMap;
 
 import java.util.List;
 
@@ -41,6 +34,7 @@ public class InfoAdapter extends BaseQuickAdapter {
                 baseViewHolder.setImageResource(R.id.recommon_img,R.mipmap.ic_launcher);
             }else {
                 Glide.with(mContext).load(imgUri).into((ImageView) baseViewHolder.getView(R.id.recommon_img));
+//                baseViewHolder.setImageBitmap(R.id.recommon_img, UrlBitMap.createVideoThumbnail(((InfoBean.RecommendBean) object).getUrl(),150,150));
             }
         }else if (object instanceof InfoBean.MovieBean){
             baseViewHolder.setText(R.id.recommon_name,((InfoBean.MovieBean)object).getClassName());

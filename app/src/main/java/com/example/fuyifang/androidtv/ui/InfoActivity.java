@@ -2,10 +2,8 @@ package com.example.fuyifang.androidtv.ui;
 
 import android.Manifest;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -38,19 +36,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
-
-import static android.os.Environment.*;
 
 public class InfoActivity extends BaseActivity {
 
@@ -99,14 +89,13 @@ public class InfoActivity extends BaseActivity {
         re_setup.setLayoutManager(manager_setup);
         SetupAdapter setupAdapter = new SetupAdapter(mContext);
         re_setup.setAdapter(setupAdapter);
-       setupAdapter.setOnItemClickListner(new SetupAdapter.OnItemClickListner() {
+        setupAdapter.setOnItemClickListner(new SetupAdapter.OnItemClickListner() {
            @Override
            public void Itemclick(View view, int position) {
                switch (position){
                    //软件更新
                    case 0:
                        updateApp(); //进行检查更新
-
                        break;
                    //问题反馈
                    case 1:

@@ -1,20 +1,12 @@
 package com.example.fuyifang.androidtv.ui;
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
-import android.view.View;
-import android.view.WindowManager;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.fuyifang.androidtv.R;
-import com.example.fuyifang.androidtv.utils.LogUtil;
 
 import tcking.github.com.giraffeplayer.GiraffePlayer;
 

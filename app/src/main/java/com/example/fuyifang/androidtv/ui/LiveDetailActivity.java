@@ -1,24 +1,22 @@
 package com.example.fuyifang.androidtv.ui;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.View;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.fuyifang.androidtv.R;
 import com.example.fuyifang.androidtv.adapter.LiveDetailAdapter;
 import com.example.fuyifang.androidtv.app.AppConfig;
-import com.example.fuyifang.androidtv.bean.InfoBean;
-import com.example.fuyifang.androidtv.bean.TodayRecommende;
 import com.example.fuyifang.androidtv.bean.VideoInfoBeaan;
 import com.example.fuyifang.androidtv.common.ApiStringCallback;
 import com.example.fuyifang.androidtv.common.BaseActivity;
 import com.example.fuyifang.androidtv.utils.HttpUtils;
-import com.example.fuyifang.androidtv.utils.LogUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -47,6 +45,16 @@ public class LiveDetailActivity extends BaseActivity {
                 Collections.reverse(mDatas);
                 mAdapter = new LiveDetailAdapter(R.layout.today_recommonde,mDatas);
                 re_livedetaill.setAdapter(mAdapter);
+                mAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
+
+                    @Override
+                    public void onItemClick(View view, int i) {
+                        Intent intent = new Intent(mContext, MainActivity.class);
+                        intent.putExtra("url", mDatas.get(i).getUrl());
+                        intent.putExtra("title", mDatas.get(i).getName());
+                        mContext.startActivity(intent);
+                    }
+                });
             }
         });
     }
