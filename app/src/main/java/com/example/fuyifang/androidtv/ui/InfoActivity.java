@@ -105,7 +105,8 @@ public class InfoActivity extends BaseActivity {
                switch (position){
                    //软件更新
                    case 0:
-                       showToast("已是最新版本");
+                       updateApp(); //进行检查更新
+
                        break;
                    //问题反馈
                    case 1:
@@ -183,7 +184,6 @@ public class InfoActivity extends BaseActivity {
         re_Movie.setLayoutManager(manager_movie);
         reMovieAdapter = new InfoAdapter(R.layout.today_recommonde, data_movie);
         re_Movie.setAdapter(reMovieAdapter);
-
     }
 
     /**
@@ -197,7 +197,6 @@ public class InfoActivity extends BaseActivity {
                 @Override
                 public void onSuccessEvent(String response) {
                     try {
-                        LogUtil.d("tag"+response);
                         JSONObject obj = new JSONObject(response);
                         String versionName = Utils.getVersionCode(AppContext.getAppContext());
                         updateName = obj.getString("version");
@@ -205,6 +204,8 @@ public class InfoActivity extends BaseActivity {
                         String detail = obj.getString("details");
                         if(!versionName.equals(updateName)){
                             showNoticeDialog(detail);
+                        }else{
+                            showToast("已是最新版本");
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

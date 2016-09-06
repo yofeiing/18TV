@@ -6,8 +6,8 @@
     <ImageView
         android:id="@+id/recommon_img"
         android:src="@mipmap/ic_launcher"
-        android:layout_width="150dp"
-        android:layout_height="150dp" />
+        android:layout_width="120dp"
+        android:layout_height="120dp" />
     <LinearLayout
         android:layout_gravity="bottom|center"
         android:layout_width="match_parent"

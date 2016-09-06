@@ -10,18 +10,22 @@ import com.example.fuyifang.androidtv.adapter.LiveDetailAdapter;
 import com.example.fuyifang.androidtv.app.AppConfig;
 import com.example.fuyifang.androidtv.bean.InfoBean;
 import com.example.fuyifang.androidtv.bean.TodayRecommende;
+import com.example.fuyifang.androidtv.bean.VideoInfoBeaan;
 import com.example.fuyifang.androidtv.common.ApiStringCallback;
 import com.example.fuyifang.androidtv.common.BaseActivity;
 import com.example.fuyifang.androidtv.utils.HttpUtils;
 import com.example.fuyifang.androidtv.utils.LogUtil;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 public class LiveDetailActivity extends BaseActivity {
     private RecyclerView re_livedetaill;
-    private List<TodayRecommende> mDatas;
+    private List<VideoInfoBeaan> mDatas;
     private LiveDetailAdapter mAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +34,6 @@ public class LiveDetailActivity extends BaseActivity {
         initData();
         re_livedetaill = (RecyclerView) findViewById(R.id.live_detail);
         re_livedetaill.setLayoutManager(new StaggeredGridLayoutManager(5,StaggeredGridLayoutManager.VERTICAL));
-        mAdapter = new LiveDetailAdapter(R.layout.today_recommonde,mDatas);
-        re_livedetaill.setAdapter(mAdapter);
     }
 
     private void initData() {
@@ -41,7 +43,10 @@ public class LiveDetailActivity extends BaseActivity {
          HttpUtils.get(url, null, null, new ApiStringCallback(LiveDetailActivity.this) {
             @Override
             public void onSuccessEvent(String response) {
-                LogUtil.d("TAG"+ response);
+                mDatas = new Gson().fromJson(response,new TypeToken<List<VideoInfoBeaan>>(){}.getType());
+                Collections.reverse(mDatas);
+                mAdapter = new LiveDetailAdapter(R.layout.today_recommonde,mDatas);
+                re_livedetaill.setAdapter(mAdapter);
             }
         });
     }

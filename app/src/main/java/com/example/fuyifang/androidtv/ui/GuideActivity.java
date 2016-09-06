@@ -105,6 +105,6 @@ public class GuideActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        HttpUtils.cancel();
+//        HttpUtils.cancel();
     }
 }
