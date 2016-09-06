@@ -105,6 +105,7 @@ public class InfoActivity extends BaseActivity {
                        break;
                    //关于
                    case 3:
+                        InfoActivity.this.startActivity(new Intent(InfoActivity.this,AboutActivity.class));
                        break;
 
                }

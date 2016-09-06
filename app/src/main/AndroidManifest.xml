@@ -34,7 +34,8 @@
             android:name=".ui.InfoActivity"
             android:screenOrientation="landscape" />
         <activity android:name=".ui.LiveDetailActivity"
-
+            android:screenOrientation="landscape"/>
+        <activity android:name=".ui.AboutActivity"
             android:screenOrientation="landscape"/>
     </application>
 
