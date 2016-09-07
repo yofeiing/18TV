@@ -9,7 +9,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@drawable/bg"
     android:orientation="vertical"
-    tools:context="com.example.fuyifang.androidtv.ui.LiveDetailActivity">
+    >
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/live_detail"

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.fuyifang.androidtv.ui.LoginActivity">
+    >
 
     <ScrollView
         android:background="#77000000"

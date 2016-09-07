@@ -6,7 +6,7 @@
     android:background="@drawable/bg"
     android:orientation="vertical"
     android:padding="5dp"
-    tools:context="com.example.fuyifang.androidtv.ui.InfoActivity">
+   >
 
     <ScrollView
         android:layout_width="match_parent"
