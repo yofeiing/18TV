@@ -48,20 +48,18 @@ public class GuideActivity extends BaseActivity {
                 isOk = false;
                 try {
                     final JSONObject obj = new JSONObject(response);
-                    Log.i("Tag",response);
                     Integer type =  obj.getInt("adType");
                     if (type == 1){
                         mLayout.setVisibility(View.VISIBLE);
                         mPlayer.play(obj.getString("url"));
                     }else if(type == 2){
-                        Glide.with(GuideActivity.this).load(obj.get("url")).placeholder(R.drawable.bg).into(mImage);
+//                        Glide.with(GuideActivity.this).load(obj.get("url")).placeholder(R.drawable.bg).into(mImage);
                         ScaleAnimation scaleAnimation = new ScaleAnimation(
                                 1, 1.2f,1,1.2f,
                                 Animation.RELATIVE_TO_SELF,0.5f,
                                 Animation.RELATIVE_TO_SELF,0.5f);
                         scaleAnimation.setFillAfter(true);
                         scaleAnimation.setDuration(3000);
-
                         mImage.startAnimation(scaleAnimation);
                     }
                     new Handler().postDelayed(new Runnable() {
@@ -74,6 +72,7 @@ public class GuideActivity extends BaseActivity {
                     },obj.getInt("showTime"));
                 } catch (JSONException e) {
                     e.printStackTrace();
+
                 }
             }
         });
@@ -82,7 +81,9 @@ public class GuideActivity extends BaseActivity {
             @Override
             public void run() {
                 if(isOk) {
-
+                    Intent intent = new Intent(mContext, InfoActivity.class);
+                    mContext.startActivity(intent);
+                    finish();
                 }
             }
         },5000);

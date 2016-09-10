@@ -22,7 +22,6 @@ public class InfoAdapter extends BaseQuickAdapter {
     public InfoAdapter(int layoutResId, List data) {
         super(layoutResId, data);
         this.mContext = AppContext.getAppContext();
-//        LogUtil.i(data.get(0).getRecommend().get(0).getName());
     }
 
     @Override
@@ -30,16 +29,15 @@ public class InfoAdapter extends BaseQuickAdapter {
         if (object instanceof InfoBean.RecommendBean) {
             baseViewHolder.setText(R.id.recommon_name, ((InfoBean.RecommendBean) object).getName());
             imgUri = (String) ((InfoBean.RecommendBean) object).getIco();
-            if (((InfoBean.RecommendBean) object).getIco() == null||((InfoBean.RecommendBean) object).getIco().equals("")){
-                baseViewHolder.setImageResource(R.id.recommon_img,R.mipmap.ic_launcher);
-            }else {
-                Glide.with(mContext).load(imgUri).into((ImageView) baseViewHolder.getView(R.id.recommon_img));
-//                baseViewHolder.setImageBitmap(R.id.recommon_img, UrlBitMap.createVideoThumbnail(((InfoBean.RecommendBean) object).getUrl(),150,150));
-            }
+            Glide.with(mContext).load(imgUri).placeholder(R.mipmap.ic_launcher).into((ImageView) baseViewHolder.getView(R.id.recommon_img));
         }else if (object instanceof InfoBean.MovieBean){
             baseViewHolder.setText(R.id.recommon_name,((InfoBean.MovieBean)object).getClassName());
+            imgUri = ((InfoBean.MovieBean) object).getIco();
+            Glide.with(mContext).load(imgUri).placeholder(R.mipmap.ic_launcher).into((ImageView) baseViewHolder.getView(R.id.recommon_img));
         }else if (object instanceof InfoBean.TvLiveBean){
             baseViewHolder.setText(R.id.recommon_name,((InfoBean.TvLiveBean)object).getClassName());
+            imgUri = ((InfoBean.TvLiveBean) object).getIco();
+            Glide.with(mContext).load(imgUri).placeholder(R.mipmap.ic_launcher).into((ImageView) baseViewHolder.getView(R.id.recommon_img));
         }
 
     }
