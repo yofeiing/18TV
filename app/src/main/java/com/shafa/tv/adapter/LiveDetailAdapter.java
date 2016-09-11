@@ -22,6 +22,12 @@ public class LiveDetailAdapter extends BaseQuickAdapter<VideoInfoBeaan>{
     @Override
     protected void convert(BaseViewHolder baseViewHolder, VideoInfoBeaan videoInfoBeaan) {
         baseViewHolder.setText(R.id.recommon_name,videoInfoBeaan.getName());
-        Glide.with(mContext).load(videoInfoBeaan.getIco()).placeholder(R.drawable.cctv_).into((ImageView) baseViewHolder.getView(R.id.recommon_img));
+        if(videoInfoBeaan.getTypeId()==1) {  // 1 表示 央视频道
+            Glide.with(mContext).load(videoInfoBeaan.getIco()).placeholder(R.drawable.cctv_).into((ImageView) baseViewHolder.getView(R.id.recommon_img));
+        }else if(videoInfoBeaan.getTypeId()==4) {// 4 表示 央视频道
+            Glide.with(mContext).load(videoInfoBeaan.getIco()).placeholder(R.drawable.tv_).into((ImageView) baseViewHolder.getView(R.id.recommon_img));
+        } else if(videoInfoBeaan.getTypeId()==16) {// 4 表示 央视频道
+            Glide.with(mContext).load(videoInfoBeaan.getIco()).placeholder(R.drawable.tv_).into((ImageView) baseViewHolder.getView(R.id.recommon_img));
+        }
     }
 }

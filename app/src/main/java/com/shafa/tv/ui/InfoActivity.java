@@ -80,6 +80,7 @@ public class InfoActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                  //TODO 1.0 版本暂时不提供用户登录功能
+                  showToast("1.0 版本 此模块 维护中");
 //                startActivity(new Intent(mContext, LoginActivity.class));
             }
         });
@@ -172,6 +173,13 @@ public class InfoActivity extends BaseActivity {
         manager_movie.setOrientation(LinearLayoutManager.HORIZONTAL);
         re_Movie.setLayoutManager(manager_movie);
         reMovieAdapter = new InfoAdapter(R.layout.today_recommonde, data_movie);
+        reMovieAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int i) {
+                //TODO
+                showToast("1.0 版本 此模块 维护中");
+            }
+        });
         re_Movie.setAdapter(reMovieAdapter);
     }
 

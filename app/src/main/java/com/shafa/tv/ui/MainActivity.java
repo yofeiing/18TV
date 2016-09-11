@@ -30,6 +30,10 @@ public class MainActivity extends AppCompatActivity {
         //TODO  做播放地址更换
         mPlayer.play(split[0]);
         mPlayer.setTitle(title);
+//        mPlayer.toggleFullScreen();
+        mPlayer.toggleAspectRatio();
+        mPlayer.toggleAspectRatio();
+        mPlayer.toggleAspectRatio();
     }
 
     @Override

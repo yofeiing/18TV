@@ -20,7 +20,9 @@
             <RelativeLayout
                 android:id="@+id/re_person"
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
+                android:layout_height="50dp"
+                android:visibility="gone"
+                >
 
                 <ImageView
                     android:id="@+id/person_avater"
