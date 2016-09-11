@@ -31,7 +31,7 @@ public class LiveDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_live_detail);
         initData();
         re_livedetaill = (RecyclerView) findViewById(R.id.live_detail);
-        re_livedetaill.setLayoutManager(new StaggeredGridLayoutManager(5,StaggeredGridLayoutManager.VERTICAL));
+        re_livedetaill.setLayoutManager(new StaggeredGridLayoutManager(4,StaggeredGridLayoutManager.VERTICAL));
     }
 
     private void initData() {

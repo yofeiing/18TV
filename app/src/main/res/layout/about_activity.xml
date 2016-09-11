@@ -3,5 +3,51 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg"
-    android:orientation="vertical">
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        >
+        <TextView
+            android:layout_gravity="bottom"
+            android:padding="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="作者: 柚飞
+    \n
+    \n
+联系：waddwaw@qq.com
+\n(来信请注明沙发TV)
+    \n
+    \n
+沙发TV 看你想看
+    \n
+    \n
+沙发TV 所有资源来自于互联网,我们只是互联网的搬用工,如有版本问题请第一时间联系我们,我们讲在24小时内进行处理!
+    \n
+    \n
+有任何建议或者反馈可以随时联系我们   "
+            android:textColor="@color/white"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/bg2logo"
+            android:layout_marginLeft="30dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="10dp"
+            />
+
+
+    </LinearLayout>
+
 </LinearLayout>

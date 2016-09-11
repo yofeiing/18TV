@@ -19,14 +19,9 @@ public class LiveDetailAdapter extends BaseQuickAdapter<VideoInfoBeaan>{
         super(layoutResId, data);
     }
 
-
     @Override
     protected void convert(BaseViewHolder baseViewHolder, VideoInfoBeaan videoInfoBeaan) {
         baseViewHolder.setText(R.id.recommon_name,videoInfoBeaan.getName());
-        if ((videoInfoBeaan.getIco() == null||(videoInfoBeaan.getIco().equals("")))){
-            baseViewHolder.setImageResource(R.id.recommon_img,R.mipmap.ic_launcher);
-        }else {
-            Glide.with(mContext).load(videoInfoBeaan.getIco()).into((ImageView) baseViewHolder.getView(R.id.recommon_img));
-        }
+        Glide.with(mContext).load(videoInfoBeaan.getIco()).placeholder(R.drawable.cctv_).into((ImageView) baseViewHolder.getView(R.id.recommon_img));
     }
 }

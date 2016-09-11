@@ -79,7 +79,8 @@ public class InfoActivity extends BaseActivity {
         re_person.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(mContext, LoginActivity.class));
+                 //TODO 1.0 版本暂时不提供用户登录功能
+//                startActivity(new Intent(mContext, LoginActivity.class));
             }
         });
 
@@ -99,9 +100,11 @@ public class InfoActivity extends BaseActivity {
                        break;
                    //问题反馈
                    case 1:
+                       InfoActivity.this.startActivity(new Intent(InfoActivity.this,AboutActivity.class));
                        break;
                    //播放设置
                    case 2:
+                       showToast("1.0 功能维护中 , 暂停使用");
                        break;
                    //关于
                    case 3:
